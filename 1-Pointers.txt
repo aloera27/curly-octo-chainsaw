@@ -1,0 +1,109 @@
+Pointers in C
+-------------
+
+//Name:Alfredo Loera 
+//Date: 12 Sept 2020
+
+
+
+
+1) Consider the following C program.
+#include <string.h>
+int main(int argc, char *argv[])
+{
+  char *temp;
+  strcpy(temp, argv[0]);
+  return 0;
+}
+
+Why is the above code incorrect (i.e., likely to crash)?
+
+
+It is likely to crash because argv[0] is being copied at locationtemp, which is not intialized and loading to a garbage location, which would cause it to crash at run time. 
+The temp pointer that is used is not pointing to any allocated space in memory 
+
+
+2) Consider the following C program.
+#include <string.h>
+int main(int argc, char *argv[])
+{
+  char temp[9];
+  strcpy(temp, argv[0]);
+  return 0;
+}
+
+A buffer overflow occurs when the program name is 9 characters long
+(e.g., "12345.exe"). Why?
+
+
+The nine characters are being copied at the location of temp, so the nine characters are copied at the 
+nine positions of array, and the null character of the string is being copied to the 10th position which
+is not currently allocated and will cause buffer overflow. 
+
+
+
+
+3) Consider the following C program.
+#include <string.h>
+int main(int argc, char *argv[])
+{
+  char *buffer = "Hello";
+  strcpy(buffer, "World");
+  return 0;
+}
+
+Why does this program crash?
+
+
+The program would likely crash since the content of the buffer is being overwritten
+which is being initialized by the constant memory content
+
+
+4) Consider the following C snippet.
+void myfunc()
+{
+  char b[100];
+  char *buffer = &b[0];
+  strcpy(buffer, "World");
+}
+
+Is this correct?  What's a simpler expression for &b[0]?
+
+Its correct, as it is copying the World with null character at last, inside the aray b
+A simpler expression for &b[0] could be char *buffer = b; 
+
+
+5) Consider the following C program.
+#include <stdio.h>
+int main(int argc, char* argv[])
+{
+  printf("%s %s %s\n", *argv, (*(argv+1)) + 2, *(argv+2));
+  return 0;
+}
+
+If this code is executed using the following line, what will be the output?
+> program1 -n5 abc
+
+
+The output would be program1 -n5 abc. 
+
+
+6) Consider the following C program.
+#include <stdio.h>
+#include <string.h>
+char *myfunc(char **argv)
+{
+  char buffer[100];
+  strcpy(buffer, "hello");
+  return buffer;
+}
+int main(int argc, char *argv[])
+{
+  char *s = myfunc(argv);
+  printf("%s\n", s);
+}
+
+What's wrong with this?
+
+It is wrong because the buffer returned by myfunc does not exist as the function return, so 
+s would hold the location which does not exist after returning from the function. 

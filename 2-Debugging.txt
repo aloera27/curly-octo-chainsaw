@@ -1,0 +1,57 @@
+Part Two: Fixing the Bugs
+-------------------------
+
+//Alfredo Loera
+//20505838
+
+
+
+Understanding the code
+
+  1) Explain why this program uses the exclamation operator with the
+     strcmp() function.
+
+
+	The exclamation operator checks whether the value of the function strcmp is
+	equal to zero. The function strcmp returns zero if two char*/string arguments are equal.
+	If the two char*/string arguments are not equal, the function strcmp returns a non-zero value.
+	The strcmp() function, is checking for equality. 
+
+  2) Explain why the 'LENGTH' macro returns the length of an array.
+     Would it work with a pointer to a dynamically allocated array? (Hint:
+     understand sizeof).
+	
+	sizeof(variable) would just return the amount of memory that is being allocated to that variable.
+	
+	(sizeof(*s) would give the memoryh allocated for the first item. 
+	sizeof(s)/sizeof(*s) would give the number of elements in a 
+	The length preprocessor would not work if the entries are intialized as a dynamically allocated array. 
+
+
+
+Bug hunting
+
+  3) Explain and fix the logical flow bug within the switch statement.
+     (What happens when the -h option is used?)
+
+	The issue with the switch statement is the break that is being used. The
+	Break command would not stop the whole program, so the program would continue
+	running. When the user uses enters the -h option, the program would be 
+	expecting more data, the fix, would returning with EXIT_SUCCESS. 
+
+
+
+  4) Explain and fix the argument parsing error. (Why is entrycount never
+     zero?)
+	entryCount would need to be intialized to -1 , and keep incrementing its value at
+	the begining of the while loop. Also argv[0] is always present. 
+	Entrycount would never be zero because it is getting increased every time. To fix the
+	argument parsing error, we could increment argv once before the loop. 
+
+
+  5) Fix print_result() to print results correctly and in the same order
+     as the words were specified on the command line.  Explain your solution.
+
+	To fix print_result, the condition of the while from while(entry_count->0)
+	to while (i<entry_count) would need to modified. A for-loop could be used that increments
+	a temporary variable 'i', which is being used to index the array. 
